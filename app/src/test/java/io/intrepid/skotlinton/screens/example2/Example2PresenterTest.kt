@@ -37,7 +37,7 @@ class Example2PresenterTest : BasePresenterTest<Example2Presenter>() {
         verify<View>(mockView).showPreviousIpAddress(mockPreviousIp)
         testConfiguration.triggerRxSchedulers()
         verify<View>(mockView).showCurrentIpAddress(mockIp)
-        verify(mockUserSettings).setLastIp(mockIp)
+        verify(mockUserSettings).lastIp = mockIp
     }
 
     @Test

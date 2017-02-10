@@ -21,7 +21,7 @@ class InstrumentationTestApplication : SkotlintonApplication() {
                 Schedulers.from(AsyncTask.THREAD_POOL_EXECUTOR),
                 AndroidSchedulers.mainThread(),
                 userSettingsOverride ?: SharePreferencesManager.getInstance(this),
-                restApiOverride ?: RetrofitClient.getApi(),
+                restApiOverride ?: RetrofitClient.api,
                 Mockito.mock(CrashReporter::class.java))
     }
 
