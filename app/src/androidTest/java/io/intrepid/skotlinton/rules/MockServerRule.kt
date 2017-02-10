@@ -34,7 +34,7 @@ class MockServerRule : TestRule {
     fun enqueueResponse(@RawRes jsonRes: Int) {
         val inputStream = InstrumentationRegistry.getContext().resources.openRawResource(jsonRes)
         val serverResponse = TestFileUtils.convertStreamToString(inputStream)
-        server.enqueue(MockResponse().setResponseCode(200).setBody(serverResponse!!))
+        server.enqueue(MockResponse().setResponseCode(200).setBody(serverResponse))
     }
 
     override fun apply(base: Statement, description: Description): Statement {

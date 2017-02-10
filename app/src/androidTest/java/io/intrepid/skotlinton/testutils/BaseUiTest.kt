@@ -9,6 +9,7 @@ import io.intrepid.skotlinton.InstrumentationTestApplication
 
 open class BaseUiTest {
     @Rule
+    @JvmField
     var mockitoRule = MockitoJUnit.rule()
 
     @After

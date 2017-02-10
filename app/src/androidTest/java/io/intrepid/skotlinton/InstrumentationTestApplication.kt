@@ -20,8 +20,8 @@ class InstrumentationTestApplication : SkotlintonApplication() {
                 // using AsyncTask executor since Espresso automatically waits for it to clear before proceeding
                 Schedulers.from(AsyncTask.THREAD_POOL_EXECUTOR),
                 AndroidSchedulers.mainThread(),
-                if (userSettingsOverride != null) userSettingsOverride else SharePreferencesManager.getInstance(this),
-                if (restApiOverride != null) restApiOverride else RetrofitClient.getApi(),
+                userSettingsOverride ?: SharePreferencesManager.getInstance(this),
+                restApiOverride ?: RetrofitClient.getApi(),
                 Mockito.mock(CrashReporter::class.java))
     }
 

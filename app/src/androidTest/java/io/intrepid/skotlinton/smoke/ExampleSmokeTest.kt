@@ -27,14 +27,16 @@ import org.mockito.Mockito.`when`
 class ExampleSmokeTest : BaseUiTest() {
 
     @Rule
+    @JvmField
     var mockServerRule = MockServerRule()
     @Rule
+    @JvmField
     var activityTestRule = ActivityTestRule(Example1Activity::class.java,
             true,
             false)
 
     @Mock
-    internal var mockUserSettings: UserSettings? = null
+    internal lateinit var mockUserSettings: UserSettings
 
     @Before
     fun setUp() {
@@ -47,7 +49,7 @@ class ExampleSmokeTest : BaseUiTest() {
         activityTestRule.launchActivity(null)
         mockServerRule.enqueueResponse(io.intrepid.skotlinton.debug.test.R.raw.mock_ip)
 
-        `when`<String>(mockUserSettings!!.lastIp).thenReturn("127.0.0.2")
+        `when`<String>(mockUserSettings.lastIp).thenReturn("127.0.0.2")
 
         onView(withId(R.id.example1_button)).perform(click())
         onView(withId(R.id.example2_current_ip)).check(matches(withText("Your current Ip address is 127.0.0.1")))
