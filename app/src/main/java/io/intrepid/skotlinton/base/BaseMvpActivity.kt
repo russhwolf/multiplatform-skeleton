@@ -9,11 +9,11 @@ import android.support.annotation.CallSuper
  * If the activity is only going to act as a container for a fragment, use [BaseFragmentActivity]
  * instead
  */
-abstract class BaseMvpActivity<T : BaseContract.Presenter<*>> : BaseActivity(), BaseContract.View {
+abstract class BaseMvpActivity<P : BaseContract.Presenter<V>, V : BaseContract.View> : BaseActivity(), BaseContract.View {
 
-    protected lateinit var presenter: T
+    protected lateinit var presenter: P
 
-    abstract fun createPresenter(configuration: PresenterConfiguration): T
+    abstract fun createPresenter(configuration: PresenterConfiguration): P
 
     protected abstract override val layoutResourceId: Int
 
@@ -40,19 +40,19 @@ abstract class BaseMvpActivity<T : BaseContract.Presenter<*>> : BaseActivity(), 
     @CallSuper
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        presenter.bindView(this)
+        presenter.bindView(this as V)
     }
 
     @CallSuper
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         super.onActivityResult(requestCode, resultCode, data)
-        presenter.bindView(this)
+        presenter.bindView(this as V)
     }
 
     @CallSuper
     public override fun onStart() {
         super.onStart()
-        presenter.bindView(this)
+        presenter.bindView(this as V)
     }
 
     @CallSuper

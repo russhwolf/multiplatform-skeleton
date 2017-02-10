@@ -14,9 +14,9 @@ import butterknife.Unbinder
 import io.intrepid.skotlinton.SkotlintonApplication
 import timber.log.Timber
 
-abstract class BaseFragment<T : BaseContract.Presenter<*>> : Fragment(), BaseContract.View {
+abstract class BaseFragment<P : BaseContract.Presenter<V>, V : BaseContract.View> : Fragment(), BaseContract.View {
 
-    protected lateinit var presenter: T
+    protected lateinit var presenter: P
     private var unbinder: Unbinder? = null
 
     @CallSuper
@@ -61,20 +61,20 @@ abstract class BaseFragment<T : BaseContract.Presenter<*>> : Fragment(), BaseCon
 
     protected abstract val layoutResourceId: Int
 
-    abstract fun createPresenter(configuration: PresenterConfiguration): T
+    abstract fun createPresenter(configuration: PresenterConfiguration): P
 
     @CallSuper
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         Timber.v("Lifecycle onActivityResult: " + this)
         super.onActivityResult(requestCode, resultCode, data)
-        presenter.bindView(this)
+        presenter.bindView(this as V)
     }
 
     @CallSuper
     override fun onStart() {
         Timber.v("Lifecycle onStart: " + this)
         super.onStart()
-        presenter.bindView(this)
+        presenter.bindView(this as V)
     }
 
     @CallSuper

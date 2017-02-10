@@ -8,7 +8,7 @@ import io.intrepid.skotlinton.R
 import io.intrepid.skotlinton.base.BaseFragment
 import io.intrepid.skotlinton.base.PresenterConfiguration
 
-class Example2Fragment : BaseFragment<Example2Contract.Presenter>(), Example2Contract.View {
+class Example2Fragment : BaseFragment<Example2Contract.Presenter, Example2Contract.View>(), Example2Contract.View {
 
     @BindView(R.id.example2_current_ip)
     @JvmField

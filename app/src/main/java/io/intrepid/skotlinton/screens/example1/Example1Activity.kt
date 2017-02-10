@@ -9,7 +9,7 @@ import io.intrepid.skotlinton.base.PresenterConfiguration
 import io.intrepid.skotlinton.screens.example1.Example1Contract.View
 import io.intrepid.skotlinton.screens.example2.Example2Activity
 
-class Example1Activity : BaseMvpActivity<Example1Contract.Presenter>(), View {
+class Example1Activity : BaseMvpActivity<Example1Contract.Presenter, Example1Contract.View>(), View {
     override fun createPresenter(configuration: PresenterConfiguration): Example1Contract.Presenter {
         return Example1Presenter(this, configuration)
     }
