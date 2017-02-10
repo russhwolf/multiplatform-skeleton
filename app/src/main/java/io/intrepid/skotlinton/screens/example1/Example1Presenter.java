@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import io.intrepid.skotlinton.base.BasePresenter;
 import io.intrepid.skotlinton.base.PresenterConfiguration;
 
-class Example1Presenter extends BasePresenter<Example1Contract.View> implements Example1Contract.Presenter {
+public class Example1Presenter extends BasePresenter<Example1Contract.View> implements Example1Contract.Presenter {
 
     Example1Presenter(@NonNull Example1Contract.View view,
                       @NonNull PresenterConfiguration configuration) {

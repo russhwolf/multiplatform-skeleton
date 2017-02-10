@@ -13,15 +13,16 @@ import io.reactivex.schedulers.TestScheduler
 
 open class BasePresenterTest<P : BasePresenter<*>> {
     @Rule
+    @JvmField
     var mockitoRule = MockitoJUnit.rule()
 
-    protected var presenter: P? = null
-    protected var testConfiguration: TestPresenterConfiguration
-    protected var ioScheduler: TestScheduler
-    protected var uiScheduler: TestScheduler
-    protected var mockRestApi: RestApi
-    protected var mockUserSettings: UserSettings
-    protected var mockCrashReporter: CrashReporter
+    protected lateinit var presenter: P
+    protected lateinit var testConfiguration: TestPresenterConfiguration
+    protected lateinit var ioScheduler: TestScheduler
+    protected lateinit var uiScheduler: TestScheduler
+    protected lateinit var mockRestApi: RestApi
+    protected lateinit var mockUserSettings: UserSettings
+    protected lateinit var mockCrashReporter: CrashReporter
 
     @Before
     fun baseSetup() {

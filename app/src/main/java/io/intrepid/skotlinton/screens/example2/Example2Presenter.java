@@ -7,7 +7,7 @@ import io.intrepid.skotlinton.base.PresenterConfiguration;
 import io.intrepid.skotlinton.utils.RxUtils;
 import io.reactivex.disposables.Disposable;
 
-class Example2Presenter extends BasePresenter<Example2Contract.View> implements Example2Contract.Presenter {
+public class Example2Presenter extends BasePresenter<Example2Contract.View> implements Example2Contract.Presenter {
 
     Example2Presenter(@NonNull Example2Contract.View view,
                       @NonNull PresenterConfiguration configuration) {
