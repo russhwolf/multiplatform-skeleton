@@ -13,11 +13,11 @@ class TestPresenterConfiguration(userSettings: UserSettings,
                                  crashReporter: CrashReporter) : PresenterConfiguration(TestScheduler(), TestScheduler(), userSettings, restApi, crashReporter) {
 
     override fun getIoScheduler(): TestScheduler {
-        return super.getIoScheduler() as TestScheduler
+        return super.ioScheduler as TestScheduler
     }
 
     override fun getUiScheduler(): TestScheduler {
-        return super.getUiScheduler() as TestScheduler
+        return super.uiScheduler as TestScheduler
     }
 
     /**
