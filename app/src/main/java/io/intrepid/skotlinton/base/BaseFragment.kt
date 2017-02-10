@@ -16,7 +16,7 @@ import timber.log.Timber
 
 abstract class BaseFragment<T : BaseContract.Presenter<*>> : Fragment(), BaseContract.View {
 
-    protected var presenter: T
+    protected lateinit var presenter: T
     private var unbinder: Unbinder? = null
 
     @CallSuper
@@ -37,11 +37,11 @@ abstract class BaseFragment<T : BaseContract.Presenter<*>> : Fragment(), BaseCon
      * Override [.onViewCreated] to handle any logic that needs to occur right after inflating the view.
      * onViewCreated is called immediately after onCreateView
      */
-    override fun onCreateView(inflater: LayoutInflater?,
+    override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         Timber.v("Lifecycle onCreateView: " + this)
-        val view = inflater!!.inflate(layoutResourceId, container, false)
+        val view = inflater.inflate(layoutResourceId, container, false)
         unbinder = ButterKnife.bind(this, view)
         return view
     }
@@ -100,7 +100,7 @@ abstract class BaseFragment<T : BaseContract.Presenter<*>> : Fragment(), BaseCon
     override fun onDestroyView() {
         Timber.v("Lifecycle onDestroyView: " + this)
         super.onDestroyView()
-        unbinder!!.unbind()
+        unbinder?.unbind()
     }
 
     @CallSuper

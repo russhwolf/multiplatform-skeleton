@@ -14,9 +14,7 @@ class Example1Activity : BaseMvpActivity<Example1Contract.Presenter>(), View {
         return Example1Presenter(this, configuration)
     }
 
-    override fun getLayoutResourceId(): Int {
-        return R.layout.activity_example1
-    }
+    override val layoutResourceId: Int = R.layout.activity_example1
 
     @OnClick(R.id.example1_button)
     internal fun onButtonClick() {

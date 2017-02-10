@@ -11,7 +11,7 @@ import io.intrepid.skotlinton.SkotlintonApplication
 import timber.log.Timber
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
-internal abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         Timber.v("Lifecycle onCreate: " + this)
         super.onCreate(savedInstanceState)

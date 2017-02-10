@@ -66,6 +66,6 @@ abstract class BasePresenter<T : BaseContract.View>(protected var view: T?, conf
     }
 
     protected fun <R> subscribeOnIoObserveOnUi(): ObservableTransformer<R, R> {
-        return { observable -> observable.subscribeOn(ioScheduler).observeOn(uiScheduler) }
+        return ObservableTransformer { observable -> observable.subscribeOn(ioScheduler).observeOn(uiScheduler) }
     }
 }

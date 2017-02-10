@@ -6,19 +6,18 @@ import io.intrepid.skotlinton.base.PresenterConfiguration
 import io.intrepid.skotlinton.logging.CrashReporter
 import io.intrepid.skotlinton.rest.RestApi
 import io.intrepid.skotlinton.settings.UserSettings
+import io.reactivex.Scheduler
 import io.reactivex.schedulers.TestScheduler
 
 class TestPresenterConfiguration(userSettings: UserSettings,
                                  restApi: RestApi,
                                  crashReporter: CrashReporter) : PresenterConfiguration(TestScheduler(), TestScheduler(), userSettings, restApi, crashReporter) {
 
-    override fun getIoScheduler(): TestScheduler {
-        return super.ioScheduler as TestScheduler
-    }
+    override val ioScheduler: TestScheduler
+        get() = super.ioScheduler as TestScheduler
 
-    override fun getUiScheduler(): TestScheduler {
-        return super.uiScheduler as TestScheduler
-    }
+    override val uiScheduler: TestScheduler
+        get() = super.uiScheduler as TestScheduler
 
     /**
      * Helper method for triggering pending Rx events

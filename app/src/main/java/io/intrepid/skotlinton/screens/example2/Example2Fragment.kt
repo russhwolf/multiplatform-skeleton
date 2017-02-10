@@ -19,9 +19,7 @@ class Example2Fragment : BaseFragment<Example2Contract.Presenter>(), Example2Con
     internal var previousIpView: TextView? = null
 
 
-    override fun getLayoutResourceId(): Int {
-        return R.layout.fragment_example2
-    }
+    override val layoutResourceId: Int = R.layout.fragment_example2
 
     override fun createPresenter(configuration: PresenterConfiguration): Example2Contract.Presenter {
         return Example2Presenter(this, configuration)

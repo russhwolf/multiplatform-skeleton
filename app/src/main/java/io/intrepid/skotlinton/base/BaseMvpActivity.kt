@@ -11,7 +11,7 @@ import android.support.annotation.CallSuper
  */
 abstract class BaseMvpActivity<T : BaseContract.Presenter<*>> : BaseActivity(), BaseContract.View {
 
-    protected var presenter: T
+    protected lateinit var presenter: T
 
     abstract fun createPresenter(configuration: PresenterConfiguration): T
 
@@ -33,7 +33,7 @@ abstract class BaseMvpActivity<T : BaseContract.Presenter<*>> : BaseActivity(), 
     /**
      * Override this method to do any additional view initialization (ex: setup RecycleView adapter)
      */
-    protected fun onViewCreated(savedInstanceState: Bundle) {
+    protected fun onViewCreated(savedInstanceState: Bundle?) {
 
     }
 

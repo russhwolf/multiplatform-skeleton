@@ -15,16 +15,16 @@ class Example2Presenter internal constructor(view: Example2Contract.View,
                 .compose<IpModel>(subscribeOnIoObserveOnUi<IpModel>())
                 .subscribe(Consumer { ipModel ->
                     val ip = ipModel.ip
-                    view.showCurrentIpAddress(ip)
+                    view?.showCurrentIpAddress(ip)
                     userSettings.lastIp = ip
                 }, RxUtils.logError())
         disposables.add(disposable)
 
         val lastIp = userSettings.lastIp
         if (lastIp == null) {
-            view.hidePreviousIpAddress()
+            view?.hidePreviousIpAddress()
         } else {
-            view.showPreviousIpAddress(lastIp)
+            view?.showPreviousIpAddress(lastIp)
         }
     }
 }
