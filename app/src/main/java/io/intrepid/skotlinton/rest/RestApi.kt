@@ -5,5 +5,6 @@ import io.reactivex.Observable
 import retrofit2.http.GET
 
 interface RestApi {
-    val myIp: Observable<IpModel>
+    @GET("/?format=json")
+    fun getMyIp(): Observable<IpModel>
 }

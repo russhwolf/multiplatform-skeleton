@@ -14,13 +14,13 @@ class CrashlyticsReporter private constructor() : CrashReporter {
         Crashlytics.logException(throwable)
     }
 
-    override fun log(priority: Int, tag: String, message: String) {
+    override fun log(priority: Int, tag: String?, message: String) {
         Crashlytics.log(priority, tag, message)
     }
 
     companion object {
 
-        private var instance: CrashlyticsReporter? = null
+        private lateinit var instance: CrashlyticsReporter
 
         fun init(context: Context) {
             val core = CrashlyticsCore.Builder()

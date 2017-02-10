@@ -23,7 +23,7 @@ class MockServerRule : TestRule {
      * Returns the url of the mock server. This is usually passed into the Retrofit client so that
      * Retrofit will use the mock server
      */
-    var serverUrl: String? = null
+    lateinit var serverUrl: String
         private set
 
     /**

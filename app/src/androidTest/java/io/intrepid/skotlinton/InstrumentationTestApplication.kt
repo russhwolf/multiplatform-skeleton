@@ -15,8 +15,8 @@ import io.reactivex.schedulers.Schedulers
 
 class InstrumentationTestApplication : SkotlintonApplication() {
 
-    override fun getPresenterConfiguration(): PresenterConfiguration {
-        return PresenterConfiguration(
+    override val presenterConfiguration: PresenterConfiguration by lazy {
+        PresenterConfiguration(
                 // using AsyncTask executor since Espresso automatically waits for it to clear before proceeding
                 Schedulers.from(AsyncTask.THREAD_POOL_EXECUTOR),
                 AndroidSchedulers.mainThread(),

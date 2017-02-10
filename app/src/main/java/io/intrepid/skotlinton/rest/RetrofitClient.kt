@@ -23,10 +23,7 @@ object RetrofitClient {
 
     val api: RestApi
         get() {
-            if (instance == null) {
-                instance = createRestApi(BASE_URL)
-            }
-            return instance
+            return instance?: createRestApi(BASE_URL).apply { instance = this }
         }
 
     @VisibleForTesting

@@ -2,7 +2,7 @@ package io.intrepid.skotlinton.screens.example1
 
 import io.intrepid.skotlinton.base.BaseContract
 
-internal class Example1Contract {
+class Example1Contract {
     interface View : BaseContract.View {
 
         fun gotoExample2()

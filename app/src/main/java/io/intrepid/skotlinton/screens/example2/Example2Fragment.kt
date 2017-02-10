@@ -11,9 +11,11 @@ import io.intrepid.skotlinton.base.PresenterConfiguration
 class Example2Fragment : BaseFragment<Example2Contract.Presenter>(), Example2Contract.View {
 
     @BindView(R.id.example2_current_ip)
+    @JvmField
     internal var currentIpView: TextView? = null
 
     @BindView(R.id.example2_previous_ip)
+    @JvmField
     internal var previousIpView: TextView? = null
 
 
@@ -25,18 +27,18 @@ class Example2Fragment : BaseFragment<Example2Contract.Presenter>(), Example2Con
         return Example2Presenter(this, configuration)
     }
 
-    override fun showCurrentIpAddress(ip: String) {
+    override fun showCurrentIpAddress(ip: String?) {
         // This should be extracted to string resource in a real app, but we are inlining this for the
         // example so that string.xml is not cluttered up with example texts
-        currentIpView!!.text = "Your current Ip address is " + ip
+        currentIpView?.text = "Your current Ip address is " + ip
     }
 
-    override fun showPreviousIpAddress(ip: String) {
-        previousIpView!!.visibility = View.VISIBLE
-        previousIpView!!.text = "Your previous Ip address is " + ip
+    override fun showPreviousIpAddress(ip: String?) {
+        previousIpView?.visibility = View.VISIBLE
+        previousIpView?.text = "Your previous Ip address is " + ip
     }
 
     override fun hidePreviousIpAddress() {
-        previousIpView!!.visibility = View.GONE
+        previousIpView?.visibility = View.GONE
     }
 }

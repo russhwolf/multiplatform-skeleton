@@ -30,7 +30,7 @@ class Example2PresenterTest : BasePresenterTest<Example2Presenter>() {
 
         val mockIpModel = IpModel()
         mockIpModel.ip = mockIp
-        `when`(mockRestApi.myIp).thenReturn(Observable.just(mockIpModel))
+        `when`(mockRestApi.getMyIp()).thenReturn(Observable.just(mockIpModel))
         `when`<String>(mockUserSettings.lastIp).thenReturn(mockPreviousIp)
 
         presenter.onViewCreated()
@@ -43,7 +43,7 @@ class Example2PresenterTest : BasePresenterTest<Example2Presenter>() {
     @Test
     @Throws(Exception::class)
     fun onViewCreated_NoPreviousIp() {
-        `when`(mockRestApi.myIp).thenReturn(Observable.empty<IpModel>())
+        `when`(mockRestApi.getMyIp()).thenReturn(Observable.empty<IpModel>())
         `when`<String>(mockUserSettings.lastIp).thenReturn(null)
 
         presenter.onViewCreated()

@@ -23,10 +23,7 @@ class SharePreferencesManager private constructor(context: Context) : UserSettin
         private var instance: SharePreferencesManager? = null
 
         fun getInstance(context: Context): UserSettings {
-            if (instance == null) {
-                instance = SharePreferencesManager(context)
-            }
-            return instance
+            return instance ?: SharePreferencesManager(context).apply { instance = this }
         }
     }
 }
