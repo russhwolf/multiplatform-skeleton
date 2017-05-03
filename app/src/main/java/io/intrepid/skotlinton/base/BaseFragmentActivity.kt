@@ -3,7 +3,6 @@ package io.intrepid.skotlinton.base
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-
 import io.intrepid.skotlinton.R
 
 /**
@@ -12,21 +11,16 @@ import io.intrepid.skotlinton.R
  * contains any additional logic, use [BaseMvpActivity] instead
  */
 abstract class BaseFragmentActivity : BaseActivity() {
-    protected override val layoutResourceId: Int
-        get() = R.layout.activity_fragment_container
+    override val layoutResourceId: Int = R.layout.activity_fragment_container
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
-            val intent = intent
             val fragment = createFragment(intent)
-            supportFragmentManager
-                    .beginTransaction()
-                    .add(R.id.fragment_container, fragment)
-                    .commit()
+            supportFragmentManager.beginTransaction().add(R.id.fragment_container, fragment).commit()
         }
     }
 
-    protected abstract fun createFragment(intent: Intent): Fragment
+    protected abstract fun createFragment(intent: Intent?): Fragment
 }

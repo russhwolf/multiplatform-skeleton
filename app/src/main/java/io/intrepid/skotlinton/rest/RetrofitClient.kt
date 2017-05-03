@@ -1,30 +1,22 @@
 package io.intrepid.skotlinton.rest
 
 import android.support.annotation.VisibleForTesting
-
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-
-import java.util.concurrent.TimeUnit
-
 import io.intrepid.skotlinton.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
 
     // TODO: change this to a real endpoint
     private val BASE_URL = "https://api.ipify.org/"
-    private val CONNECTION_TIMEOUT = 30
+    private val CONNECTION_TIMEOUT = 30L
 
-    private var instance: RestApi? = null
-
-    val api: RestApi
-        get() {
-            return instance?: createRestApi(BASE_URL).apply { instance = this }
-        }
+    val restApi: RestApi by lazy { createRestApi(BASE_URL) }
 
     @VisibleForTesting
     internal fun getTestApi(baseUrl: String): RestApi {
@@ -34,13 +26,10 @@ object RetrofitClient {
     private fun createRestApi(baseUrl: String): RestApi {
         val builder = OkHttpClient.Builder()
         if (BuildConfig.LOG_CONSOLE) {
-            builder.addInterceptor(HttpLoggingInterceptor { message -> Timber.v(message) }.setLevel(
-                    HttpLoggingInterceptor.Level.BODY))
+            builder.addInterceptor(HttpLoggingInterceptor({ Timber.v(it) }).setLevel(HttpLoggingInterceptor.Level.BODY))
         }
-        val httpClient = builder
-                .connectTimeout(CONNECTION_TIMEOUT.toLong(), TimeUnit.SECONDS)
-                .build()
 
+        val httpClient = builder.connectTimeout(CONNECTION_TIMEOUT, TimeUnit.SECONDS).build()
         return Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .client(httpClient)

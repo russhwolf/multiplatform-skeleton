@@ -1,7 +1,6 @@
 package io.intrepid.skotlinton.logging
 
 import android.util.Log
-
 import io.intrepid.skotlinton.BuildConfig
 import timber.log.Timber
 
@@ -12,9 +11,10 @@ object TimberConfig {
             if (BuildConfig.REPORT_CRASH) {
                 tree = object : Timber.DebugTree() {
                     override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-                        super.log(priority, tag, message, t)
                         if (priority >= Log.INFO) {
                             crashReporter.log(priority, tag, message)
+                        } else {
+                            super.log(priority, tag, message, t)
                         }
                     }
                 }
@@ -23,7 +23,7 @@ object TimberConfig {
             }
         } else if (BuildConfig.REPORT_CRASH) {
             tree = object : Timber.Tree() {
-                override fun log(priority: Int, tag: String, message: String, t: Throwable) {
+                override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
                     if (priority >= Log.INFO) {
                         crashReporter.log(priority, tag, message)
                     }

@@ -2,13 +2,13 @@ package io.intrepid.skotlinton.screens.example1
 
 import io.intrepid.skotlinton.base.BaseContract
 
-class Example1Contract {
+interface Example1Contract {
     interface View : BaseContract.View {
 
         fun gotoExample2()
     }
 
-    interface Presenter : BaseContract.Presenter<View> {
+    interface Presenter : BaseContract.Presenter {
 
         fun onButtonClick()
     }

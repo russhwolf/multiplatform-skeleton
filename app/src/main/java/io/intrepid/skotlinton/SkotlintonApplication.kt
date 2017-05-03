@@ -1,14 +1,12 @@
 package io.intrepid.skotlinton
 
 import android.app.Application
-
 import com.squareup.leakcanary.LeakCanary
-
 import io.intrepid.skotlinton.base.PresenterConfiguration
 import io.intrepid.skotlinton.logging.CrashlyticsReporter
 import io.intrepid.skotlinton.logging.TimberConfig
 import io.intrepid.skotlinton.rest.RetrofitClient
-import io.intrepid.skotlinton.settings.SharePreferencesManager
+import io.intrepid.skotlinton.settings.SharedPreferencesManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig
@@ -22,7 +20,7 @@ open class SkotlintonApplication : Application() {
 
         CrashlyticsReporter.init(this)
 
-        TimberConfig.init(CrashlyticsReporter.getInstance())
+        TimberConfig.init(CrashlyticsReporter)
 
         initCalligraphy()
     }
@@ -35,12 +33,13 @@ open class SkotlintonApplication : Application() {
         CalligraphyConfig.initDefault(config)
     }
 
-    open val presenterConfiguration: PresenterConfiguration
-        get() = PresenterConfiguration(
+    open fun getPresenterConfiguration(): PresenterConfiguration {
+        return PresenterConfiguration(
                 Schedulers.io(),
                 AndroidSchedulers.mainThread(),
-                SharePreferencesManager.getInstance(this),
-                RetrofitClient.api,
-                CrashlyticsReporter.getInstance()
+                SharedPreferencesManager.getInstance(this),
+                RetrofitClient.restApi,
+                CrashlyticsReporter
         )
+    }
 }

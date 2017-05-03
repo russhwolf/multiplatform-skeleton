@@ -1,20 +1,20 @@
 package io.intrepid.skotlinton.testutils
 
-import org.junit.Before
-import org.junit.Rule
-import org.mockito.junit.MockitoJUnit
-import org.mockito.junit.MockitoRule
-
+import io.intrepid.skotlinton.base.BaseContract
 import io.intrepid.skotlinton.base.BasePresenter
 import io.intrepid.skotlinton.logging.CrashReporter
 import io.intrepid.skotlinton.rest.RestApi
 import io.intrepid.skotlinton.settings.UserSettings
 import io.reactivex.schedulers.TestScheduler
+import org.junit.Before
+import org.junit.Rule
+import org.mockito.junit.MockitoJUnit
+import org.mockito.junit.MockitoRule
 
-open class BasePresenterTest<P : BasePresenter<*>> {
+abstract class BasePresenterTest<P : BasePresenter<out BaseContract.View>> {
     @Rule
     @JvmField
-    var mockitoRule = MockitoJUnit.rule()
+    val mockitoRule: MockitoRule = MockitoJUnit.rule()
 
     protected lateinit var presenter: P
     protected lateinit var testConfiguration: TestPresenterConfiguration
