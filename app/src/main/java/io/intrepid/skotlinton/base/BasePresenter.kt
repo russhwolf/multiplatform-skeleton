@@ -10,7 +10,7 @@ import io.reactivex.disposables.CompositeDisposable
 abstract class BasePresenter<V : BaseContract.View>(protected var view: V?, configuration: PresenterConfiguration) : BaseContract.Presenter {
 
     protected val ioScheduler: Scheduler = configuration.ioScheduler
-    protected val uiScheduer: Scheduler = configuration.uiScheduler
+    protected val uiScheduler: Scheduler = configuration.uiScheduler
     protected val userSettings: UserSettings = configuration.userSettings
     protected val restApi: RestApi = configuration.restApi
     protected val crashReporter: CrashReporter = configuration.crashReporter
@@ -58,5 +58,5 @@ abstract class BasePresenter<V : BaseContract.View>(protected var view: V?, conf
 
     }
 
-    protected fun <R> subscribeOnIoObserveOnUi(): ObservableTransformer<R, R> = ObservableTransformer { it.subscribeOn(ioScheduler).observeOn(uiScheduer) }
+    protected fun <R> subscribeOnIoObserveOnUi(): ObservableTransformer<R, R> = ObservableTransformer { it.subscribeOn(ioScheduler).observeOn(uiScheduler) }
 }

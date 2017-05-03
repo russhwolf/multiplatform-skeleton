@@ -7,7 +7,8 @@ import io.intrepid.skotlinton.settings.UserSettings
 import io.reactivex.schedulers.TestScheduler
 import org.mockito.Mockito
 
-class TestPresenterConfiguration private constructor(userSettings: UserSettings, restApi: RestApi, crashReporter: CrashReporter) : PresenterConfiguration(TestScheduler(), TestScheduler(), userSettings, restApi, crashReporter) {
+class TestPresenterConfiguration private constructor(userSettings: UserSettings, restApi: RestApi, crashReporter: CrashReporter)
+    : PresenterConfiguration(TestScheduler(), TestScheduler(), userSettings, restApi, crashReporter) {
 
     override val ioScheduler: TestScheduler get() = super.ioScheduler as TestScheduler
     override val uiScheduler: TestScheduler get() = super.uiScheduler as TestScheduler

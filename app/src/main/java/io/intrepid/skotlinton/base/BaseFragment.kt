@@ -25,13 +25,13 @@ abstract class BaseFragment<P : BaseContract.Presenter> : Fragment(), BaseContra
 
     @CallSuper
     override fun onAttach(context: Context?) {
-        Timber.v("Lifecycle onAttach: %s to %s", this, context)
+        Timber.v("Lifecycle onAttach: $this to $context")
         super.onAttach(context)
     }
 
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
-        Timber.v("Lifecycle onCreate: %s", this)
+        Timber.v("Lifecycle onCreate: $this")
         super.onCreate(savedInstanceState)
         val configuration = skotlintonApplication.getPresenterConfiguration()
         onViewCreated(savedInstanceState)
@@ -43,7 +43,7 @@ abstract class BaseFragment<P : BaseContract.Presenter> : Fragment(), BaseContra
      * onViewCreated is called immediately after onCreateView
      */
     override final fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        Timber.v("Lifecycle onCreateView: %s", this)
+        Timber.v("Lifecycle onCreateView: $this")
         val view = inflater.inflate(layoutResourceId, container, false)
         unbinder = ButterKnife.bind(this, view)
         return view
@@ -78,39 +78,39 @@ abstract class BaseFragment<P : BaseContract.Presenter> : Fragment(), BaseContra
 
     @CallSuper
     override fun onResume() {
-        Timber.v("Lifecycle onResume: %s", this)
+        Timber.v("Lifecycle onResume: $this")
         super.onResume()
     }
 
     @CallSuper
     override fun onPause() {
-        Timber.v("Lifecycle onPause: %s", this)
+        Timber.v("Lifecycle onPause: $this")
         super.onPause()
     }
 
     @CallSuper
     override fun onStop() {
-        Timber.v("Lifecycle onStop: %s", this)
+        Timber.v("Lifecycle onStop: $this")
         super.onStop()
         presenter.unbindView()
     }
 
     @CallSuper
     override fun onDestroyView() {
-        Timber.v("Lifecycle onDestroyView: %s", this)
+        Timber.v("Lifecycle onDestroyView: $this")
         super.onDestroyView()
         unbinder?.unbind()
     }
 
     @CallSuper
     override fun onDestroy() {
-        Timber.v("Lifecycle onDestroy: %s", this)
+        Timber.v("Lifecycle onDestroy: $this")
         super.onDestroy()
         presenter.onViewDestroyed()
     }
 
     override fun onDetach() {
-        Timber.v("Lifecycle onDetach: %s from %s", this, context)
+        Timber.v("Lifecycle onDetach: $this from $context")
         super.onDetach()
     }
 }

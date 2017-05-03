@@ -17,7 +17,7 @@ abstract class BaseActivity : AppCompatActivity() {
         get() = application as SkotlintonApplication
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Timber.v("Lifecycle onCreate: %s", this)
+        Timber.v("Lifecycle onCreate: $this")
         super.onCreate(savedInstanceState)
 
         setContentView(layoutResourceId)
@@ -26,43 +26,43 @@ abstract class BaseActivity : AppCompatActivity() {
 
     @CallSuper
     override fun onNewIntent(intent: Intent?) {
-        Timber.v("Lifecycle onNewIntent: %s", this)
+        Timber.v("Lifecycle onNewIntent: $this")
         super.onNewIntent(intent)
     }
 
     @CallSuper
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        Timber.v("Lifecycle onActivityResult: %s", this)
+        Timber.v("Lifecycle onActivityResult: $this")
         super.onActivityResult(requestCode, resultCode, data)
     }
 
     @CallSuper
     override fun onStart() {
-        Timber.v("Lifecycle onStart: %s", this)
+        Timber.v("Lifecycle onStart: $this")
         super.onStart()
     }
 
     @CallSuper
     override fun onResume() {
-        Timber.v("Lifecycle onResume: %s", this)
+        Timber.v("Lifecycle onResume: $this")
         super.onResume()
     }
 
     @CallSuper
     override fun onPause() {
-        Timber.v("Lifecycle onPause: %s", this)
+        Timber.v("Lifecycle onPause: $this")
         super.onPause()
     }
 
     @CallSuper
     override fun onStop() {
-        Timber.v("Lifecycle onStop: %s", this)
+        Timber.v("Lifecycle onStop: $this")
         super.onStop()
     }
 
     @CallSuper
     override fun onDestroy() {
-        Timber.v("Lifecycle onDestroy: %s", this)
+        Timber.v("Lifecycle onDestroy: $this")
         super.onDestroy()
     }
 
