@@ -1,12 +1,12 @@
-# Skeleton
+# Skotlinton
 
-[![Build Status](http://ci.intrepid.io:8080/buildStatus/icon?job=skeleton-android)](http://ci.intrepid.io:8080/job/skeleton-android/)
-[![Coverage](http://ci.intrepid.io:9913/jenkins/cobertura/skeleton-android/)](http://ci.intrepid.io:8080/job/skeleton-android/cobertura/)
+[![Build Status](https://ci.intrepid.io/buildStatus/icon?job=skotlinton-android)](https://ci.intrepid.io/job/skotlinton-android/)
+[![Coverage](http://ci.intrepid.io:9913/jenkins/cobertura/skotlinton-android/)](https://ci.intrepid.io/job/skotlinton-android/cobertura/)
 
-The starting point for Android apps at Intrepid.
+Kotlin port of [Android Skeleton](https://github.com/IntrepidPursuits/skeleton-android) project.
 
 1. [Overview](#overview)
-1. [Cloning the Project](#cloning-the-project) 
+1. [Cloning the Project](#cloning-the-project)
 1. [Building](#building)
     1. [Configurations](#configurations)
         1. [Release](#release)
@@ -30,20 +30,20 @@ The project contains the following components:
 -   Various other setups that we often do when starting projects (tests, custom Application, Retrofit, Timber, Crashlytics, common strings, etc)
 
 ## Cloning the project
-To start a new project that's based on this project, simply download/clone the repo and then rename all instances of "skeleton" to your project name. You can use the [necromancer.sh](./necromancer.sh) to automate this
+To start a new project that's based on this project, simply download/clone the repo and then rename all instances of "skotlinton" to your project name. You can use the [nekromancer.sh](./nekromancer.sh) to automate this
 
 The script takes in the following arguments
 ```
--p  Specifies the the package name of the new app. The package name 
-    should be in the form of x.y.z . The last part of the package name 
+-p  Specifies the the package name of the new app. The package name
+    should be in the form of x.y.z . The last part of the package name
     will also serve as the application name and the directory name.
--d  Specifies the directory that the project will be downloaded/cloned 
+-d  Specifies the directory that the project will be downloaded/cloned
     to. Defaults to the current directory if it's not specified.
 ```
 
 example usage:
 ```
-./necromancer.sh -p io.intrepid.zombie -d ~/AndroidStudioProjects/
+./nekromancer.sh -p io.intrepid.zombie -d ~/AndroidStudioProjects/
 ```
 
 ## Building
@@ -68,8 +68,8 @@ signing_password=#####
 
 ### Jenkins
 There are 2 different Jenkins builds for this project:
-- skeleton-android - This is run every time something is merged into the develop branch. It runs the unit tests, generates a QA build, and uploads it to the OTA link.
-- skeleton-android-pr - This is run every time a PR is created. It runs the unit tests and reports the result back to the GitHub PR page.
+- skotlinton-android - This is run every time something is merged into the develop branch. It runs the unit tests, generates a QA build, and uploads it to the OTA link.
+- skotlinton-android-pr - This is run every time a PR is created. It runs the unit tests and reports the result back to the GitHub PR page.
 
 ## Testing
 ### Unit Tests
@@ -83,7 +83,7 @@ Code coverage configuration are handled by [coverage.gradle](app/coverage.gradle
 
 ## Architecture
 ### Model-View-Presenter
-The app uses the popular MVP architecture to allow for separation of logic and ease of testing. In this paradigm, all business logic should live inside presenters (but they can delegate some tasks to other classes that are injected as dependencies). Activities and fragment will act as "views", they should not have any logic other than passing the user events to the presenter and displaying the data. There are also Contract classes that specify the communication interface between the views and presenters.  
+The app uses the popular MVP architecture to allow for separation of logic and ease of testing. In this paradigm, all business logic should live inside presenters (but they can delegate some tasks to other classes that are injected as dependencies). Activities and fragment will act as "views", they should not have any logic other than passing the user events to the presenter and displaying the data. There are also Contract classes that specify the communication interface between the views and presenters.
 
 ### Base Classes
 - `BaseActivity`: Base class for all activities. Includes lifecycle logging and view inflation.
@@ -95,7 +95,6 @@ The app uses the popular MVP architecture to allow for separation of logic and e
 - `PresenterConfiguration`: Wrapper class for common dependencies that all presenters are expected to have.
 
 ### Third Party Libraries
-- Retrolambda (adds support for lambda expressions in Java 6)
 - RxJava/RxAndroid (helps with asynchronous event handling)
 - ButterKnife (easier view binding)
 - Retrofit/OkHttp (simplifies network requests)

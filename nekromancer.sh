@@ -19,7 +19,7 @@ downloadDirectory=./
 newPackageName=$oldPackageName
 
 print_help() {
-  echo "Necromancer - Setup Script for IntrepidPursuits/AndroidSkotlinton
+  echo "Nekromancer - Setup Script for IntrepidPursuits/AndroidSkotlinton
 
 Command-Line Options
 
@@ -76,7 +76,7 @@ fi
 git clone https://github.com/IntrepidPursuits/skotlinton-android.git $downloadDirectory/$newApplicationCapitalizedName || exit 1
 
 cd $downloadDirectory/$newApplicationCapitalizedName
-rm necromancer.sh
+rm nekromancer.sh
 git remote remove origin
 
 if [ "$cleanHistory" = true ] ; then
