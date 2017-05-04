@@ -7,7 +7,7 @@ import io.intrepid.skotlinton.base.BaseFragmentActivity
 
 class Example2Activity : BaseFragmentActivity() {
 
-    override fun createFragment(intent: Intent): Fragment {
+    override fun createFragment(intent: Intent?): Fragment {
         return Example2Fragment()
     }
 }

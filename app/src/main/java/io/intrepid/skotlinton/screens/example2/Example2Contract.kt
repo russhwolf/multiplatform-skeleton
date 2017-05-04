@@ -2,15 +2,17 @@ package io.intrepid.skotlinton.screens.example2
 
 import io.intrepid.skotlinton.base.BaseContract
 
-class Example2Contract {
+interface Example2Contract {
     interface View : BaseContract.View {
 
-        fun showCurrentIpAddress(text: String?)
+        fun showCurrentIpAddress(ip: String)
 
-        fun showPreviousIpAddress(text: String?)
+        fun showPreviousIpAddress(ip: String)
 
         fun hidePreviousIpAddress()
     }
 
-    interface Presenter : BaseContract.Presenter<View>
+    interface Presenter : BaseContract.Presenter {
+
+    }
 }

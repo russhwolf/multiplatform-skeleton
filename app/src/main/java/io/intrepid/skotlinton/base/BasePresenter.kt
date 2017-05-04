@@ -7,39 +7,32 @@ import io.reactivex.ObservableTransformer
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 
-abstract class BasePresenter<T : BaseContract.View>(protected var view: T?, configuration: PresenterConfiguration) : BaseContract.Presenter<T> {
+abstract class BasePresenter<V : BaseContract.View>(protected var view: V?, configuration: PresenterConfiguration) : BaseContract.Presenter {
 
-    protected val disposables = CompositeDisposable()
-    protected val ioScheduler: Scheduler
-    protected val uiScheduler: Scheduler
-    protected val userSettings: UserSettings
-    protected val restApi: RestApi
-    protected val crashReporter: CrashReporter
+    protected val ioScheduler: Scheduler = configuration.ioScheduler
+    protected val uiScheduler: Scheduler = configuration.uiScheduler
+    protected val userSettings: UserSettings = configuration.userSettings
+    protected val restApi: RestApi = configuration.restApi
+    protected val crashReporter: CrashReporter = configuration.crashReporter
+
+    protected val disposables: CompositeDisposable = CompositeDisposable()
 
     private var isViewBound = false
-
-    init {
-        this.ioScheduler = configuration.ioScheduler
-        this.uiScheduler = configuration.uiScheduler
-        this.userSettings = configuration.userSettings
-        this.restApi = configuration.restApi
-        this.crashReporter = configuration.crashReporter
-    }
 
     override fun onViewCreated() {
 
     }
 
-    override fun bindView(view: T) {
-        this.view = view
-
+    override fun bindView(view: BaseContract.View) {
+        @Suppress("UNCHECKED_CAST")
+        this.view = view as V
         if (!isViewBound) {
             onViewBound()
             isViewBound = true
         }
     }
 
-    protected fun onViewBound() {
+    open protected fun onViewBound() {
 
     }
 
@@ -53,7 +46,7 @@ abstract class BasePresenter<T : BaseContract.View>(protected var view: T?, conf
         }
     }
 
-    protected fun onViewUnbound() {
+    open protected fun onViewUnbound() {
 
     }
 
@@ -65,7 +58,5 @@ abstract class BasePresenter<T : BaseContract.View>(protected var view: T?, conf
 
     }
 
-    protected fun <R> subscribeOnIoObserveOnUi(): ObservableTransformer<R, R> {
-        return ObservableTransformer { observable -> observable.subscribeOn(ioScheduler).observeOn(uiScheduler) }
-    }
+    protected fun <R> subscribeOnIoObserveOnUi(): ObservableTransformer<R, R> = ObservableTransformer { it.subscribeOn(ioScheduler).observeOn(uiScheduler) }
 }

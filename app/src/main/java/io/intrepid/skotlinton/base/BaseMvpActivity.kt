@@ -6,61 +6,59 @@ import android.support.annotation.CallSuper
 
 /**
  * Base class for activities that will have some business logic instead of just hosting a fragment.
- * If the activity is only going to act as a container for a fragment, use [BaseFragmentActivity]
+ * If the activity is only going to act as a container for a fragment, use {@link BaseFragmentActivity}
  * instead
  */
-abstract class BaseMvpActivity<P : BaseContract.Presenter<V>, V : BaseContract.View> : BaseActivity(), BaseContract.View {
+abstract class BaseMvpActivity<P : BaseContract.Presenter> : BaseActivity(), BaseContract.View {
 
     protected lateinit var presenter: P
 
-    abstract fun createPresenter(configuration: PresenterConfiguration): P
-
-    protected abstract override val layoutResourceId: Int
-
-    override
-            /**
-             * Override [.onViewCreated] to handle any logic that needs to occur right after inflating the view.
-             * onViewCreated is called immediately after onCreateView
-             */
-    fun onCreate(savedInstanceState: Bundle?) {
+    /**
+     * Override [.onViewCreated] to handle any logic that needs to occur right after inflating the view.
+     * onViewCreated is called immediately after onCreateView
+     */
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val configuration = skotlintonApplication.presenterConfiguration
+        val configuration = skotlintonApplication.getPresenterConfiguration()
         presenter = createPresenter(configuration)
         onViewCreated(savedInstanceState)
         presenter.onViewCreated()
     }
 
+    abstract fun createPresenter(configuration: PresenterConfiguration): P;
+
     /**
      * Override this method to do any additional view initialization (ex: setup RecycleView adapter)
      */
-    protected fun onViewCreated(savedInstanceState: Bundle?) {
+    protected open fun onViewCreated(savedInstanceState: Bundle?) {
 
     }
 
     @CallSuper
-    override fun onNewIntent(intent: Intent) {
+    override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        presenter.bindView(this as V)
+        presenter.bindView(this)
     }
 
     @CallSuper
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        presenter.bindView(this as V)
+        presenter.bindView(this)
     }
 
     @CallSuper
-    public override fun onStart() {
+    override fun onStart() {
         super.onStart()
-        presenter.bindView(this as V)
+        presenter.bindView(this)
     }
 
     @CallSuper
-    public override fun onStop() {
+    override fun onStop() {
         super.onStop()
         presenter.unbindView()
     }
 
+    @CallSuper
     override fun onDestroy() {
         super.onDestroy()
         presenter.onViewDestroyed()

@@ -1,12 +1,12 @@
 package io.intrepid.skotlinton.base
 
-class BaseContract {
+interface BaseContract {
 
-    interface View
+    interface View {
+    }
 
-    interface Presenter<T : View> {
-
-        fun bindView(view: T)
+    interface Presenter {
+        fun bindView(view: View)
 
         fun unbindView()
 

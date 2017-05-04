@@ -1,23 +1,19 @@
 package io.intrepid.skotlinton.screens.example2
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.widget.TextView
-
 import butterknife.BindView
 import io.intrepid.skotlinton.R
 import io.intrepid.skotlinton.base.BaseFragment
 import io.intrepid.skotlinton.base.PresenterConfiguration
 
-class Example2Fragment : BaseFragment<Example2Contract.Presenter, Example2Contract.View>(), Example2Contract.View {
+class Example2Fragment : BaseFragment<Example2Contract.Presenter>(), Example2Contract.View {
 
     @BindView(R.id.example2_current_ip)
-    @JvmField
-    internal var currentIpView: TextView? = null
-
+    internal lateinit var currentIpView: TextView
     @BindView(R.id.example2_previous_ip)
-    @JvmField
-    internal var previousIpView: TextView? = null
-
+    internal lateinit var previousIpView: TextView
 
     override val layoutResourceId: Int = R.layout.fragment_example2
 
@@ -25,18 +21,20 @@ class Example2Fragment : BaseFragment<Example2Contract.Presenter, Example2Contra
         return Example2Presenter(this, configuration)
     }
 
-    override fun showCurrentIpAddress(ip: String?) {
+    @SuppressLint("SetTextI18n")
+    override fun showCurrentIpAddress(ip: String) {
         // This should be extracted to string resource in a real app, but we are inlining this for the
         // example so that string.xml is not cluttered up with example texts
-        currentIpView?.text = "Your current Ip address is " + ip
+        currentIpView.text = "Your current Ip address is " + ip
     }
 
-    override fun showPreviousIpAddress(ip: String?) {
-        previousIpView?.visibility = View.VISIBLE
-        previousIpView?.text = "Your previous Ip address is " + ip
+    @SuppressLint("SetTextI18n")
+    override fun showPreviousIpAddress(ip: String) {
+        previousIpView.visibility = View.VISIBLE
+        previousIpView.text = "Your previous Ip address is " + ip
     }
 
     override fun hidePreviousIpAddress() {
-        previousIpView?.visibility = View.GONE
+        previousIpView.visibility = View.GONE
     }
 }
