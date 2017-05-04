@@ -87,7 +87,7 @@ fi
 if [ "$newPackageName" != "$oldPackageName" ]; then
     cd app
 
-    mv src/main/java/io/intrepid/skotlinton/SkotlintonApplication.kt src/main/java/io/intrepid/skotlinton/${newApplicationCapitalizedName}Application.kt
+    mv src/main/kotlin/io/intrepid/skotlinton/SkotlintonApplication.kt src/main/kotlin/io/intrepid/skotlinton/${newApplicationCapitalizedName}Application.kt
 
     # Not all Macs have LANG set. If they dont and its not C SED can error with 'sed: RE error: illegal byte sequence'.
     #    Because -exec subshells... we need to export our environment... So store the one we came in with... Export 'C' then reset.
@@ -102,10 +102,10 @@ if [ "$newPackageName" != "$oldPackageName" ]; then
     declare -a srcDirs=("androidTest" "main" "test")
     for i in "${srcDirs[@]}"
     do
-	    mv src/$i/java/io/intrepid/skotlinton/* temp/
-	    rm -r src/$i/java/io/
-	    mkdir -p src/$i/java/$newDirectoryName
-	    mv temp/* src/$i/java/$newDirectoryName/
+	    mv src/$i/kotlin/io/intrepid/skotlinton/* temp/
+	    rm -r src/$i/kotlin/io/
+	    mkdir -p src/$i/kotlin/$newDirectoryName
+	    mv temp/* src/$i/kotlin/$newDirectoryName/
     done
     rmdir temp
 fi
