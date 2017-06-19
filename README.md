@@ -1,7 +1,7 @@
 # Skotlinton
 
-[![Build Status](https://ci.intrepid.io/buildStatus/icon?job=skotlinton-android)](https://ci.intrepid.io/job/skotlinton-android/)
-[![Coverage](http://ci.intrepid.io:9913/jenkins/cobertura/skotlinton-android/)](https://ci.intrepid.io/job/skotlinton-android/cobertura/)
+[![Build Status](https://ci.intrepid.io/buildStatus/icon?job=Android/android-projects/skotlinton-android)](https://ci.intrepid.io/job/Android/job/android-projects/job/skotlinton-android/)
+[![Coverage](http://ci.intrepid.io:9913/jenkins/cobertura/Android/job/android-projects/job/skotlinton-android/)](https://ci.intrepid.io/job/Android/job/android-projects/job/skotlinton-android/cobertura/)
 
 Kotlin port of [Android Skeleton](https://github.com/IntrepidPursuits/skeleton-android) project.
 
