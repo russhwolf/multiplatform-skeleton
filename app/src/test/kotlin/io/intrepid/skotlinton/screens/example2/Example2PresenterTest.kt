@@ -2,7 +2,7 @@ package io.intrepid.skotlinton.screens.example2
 
 import io.intrepid.skotlinton.models.IpModel
 import io.intrepid.skotlinton.testutils.BasePresenterTest
-import io.reactivex.Observable
+import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -25,7 +25,7 @@ internal class Example2PresenterTest : BasePresenterTest<Example2Presenter>() {
 
         val mockIpModel = IpModel()
         mockIpModel.ip = mockIp
-        `when`(mockRestApi.getMyIp()).thenReturn(Observable.just(mockIpModel))
+        `when`(mockRestApi.getMyIp()).thenReturn(Single.just(mockIpModel))
         `when`(mockUserSettings.lastIp).thenReturn(mockPreviousIp)
 
         presenter.onViewCreated()
@@ -38,7 +38,7 @@ internal class Example2PresenterTest : BasePresenterTest<Example2Presenter>() {
     @Test
     @Throws(Exception::class)
     fun onViewCreated_NoPreviousIp() {
-        `when`(mockRestApi.getMyIp()).thenReturn(Observable.empty<IpModel>())
+        `when`(mockRestApi.getMyIp()).thenReturn(Single.error(Throwable()))
         `when`(mockUserSettings.lastIp).thenReturn("")
 
         presenter.onViewCreated()

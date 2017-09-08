@@ -3,8 +3,10 @@ package io.intrepid.skotlinton.base
 import io.intrepid.skotlinton.logging.CrashReporter
 import io.intrepid.skotlinton.rest.RestApi
 import io.intrepid.skotlinton.settings.UserSettings
-import io.reactivex.ObservableTransformer
+import io.intrepid.skotlinton.utils.applySchedulers
+import io.reactivex.Observable
 import io.reactivex.Scheduler
+import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 
 abstract class BasePresenter<V : BaseContract.View>(protected var view: V?, configuration: PresenterConfiguration) : BaseContract.Presenter {
@@ -58,5 +60,11 @@ abstract class BasePresenter<V : BaseContract.View>(protected var view: V?, conf
 
     }
 
-    protected fun <R> subscribeOnIoObserveOnUi(): ObservableTransformer<R, R> = ObservableTransformer { it.subscribeOn(ioScheduler).observeOn(uiScheduler) }
+    fun <T> Observable<T>.subscribeOnIoObserveOnUi(): Observable<T> {
+        return applySchedulers(ioScheduler, uiScheduler)
+    }
+
+    fun <T> Single<T>.subscribeOnIoObserveOnUi(): Single<T> {
+        return applySchedulers(ioScheduler, uiScheduler)
+    }
 }

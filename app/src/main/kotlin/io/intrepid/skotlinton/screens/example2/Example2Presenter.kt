@@ -12,7 +12,7 @@ internal class Example2Presenter(view: Example2Contract.View, configuration: Pre
         super.onViewCreated()
 
         val disposable = restApi.getMyIp()
-                .compose(subscribeOnIoObserveOnUi())
+                .subscribeOnIoObserveOnUi()
                 .subscribe(Consumer {
                     val ip = it.ip
                     view?.showCurrentIpAddress(ip)
