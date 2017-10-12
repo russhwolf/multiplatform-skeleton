@@ -16,13 +16,17 @@ open class SkotlintonApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        LeakCanary.install(this)
+        setupLeakCanary()
 
         CrashlyticsReporter.init(this)
 
         TimberConfig.init(CrashlyticsReporter)
 
         initCalligraphy()
+    }
+
+    protected open fun setupLeakCanary() {
+        LeakCanary.install(this)
     }
 
     private fun initCalligraphy() {

@@ -23,6 +23,10 @@ class InstrumentationTestApplication : SkotlintonApplication() {
         )
     }
 
+    override fun setupLeakCanary() {
+        // noop, we don't want LeakCanary in UI tests
+    }
+
     companion object {
         private var restApiOverride: RestApi? = null
         private var userSettingsOverride: UserSettings? = null
