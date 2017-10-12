@@ -12,7 +12,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 abstract class BaseActivity : AppCompatActivity() {
 
-    protected abstract val layoutResourceId: Int;
+    protected abstract val layoutResourceId: Int
     protected val skotlintonApplication: SkotlintonApplication
         get() = application as SkotlintonApplication
 

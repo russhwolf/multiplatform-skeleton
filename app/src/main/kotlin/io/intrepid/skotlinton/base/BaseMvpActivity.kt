@@ -25,7 +25,7 @@ abstract class BaseMvpActivity<P : BaseContract.Presenter> : BaseActivity(), Bas
         presenter.onViewCreated()
     }
 
-    abstract fun createPresenter(configuration: PresenterConfiguration): P;
+    abstract fun createPresenter(configuration: PresenterConfiguration): P
 
     /**
      * Override this method to do any additional view initialization (ex: setup RecycleView adapter)
