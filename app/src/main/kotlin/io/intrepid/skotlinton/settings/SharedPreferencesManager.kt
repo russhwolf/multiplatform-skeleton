@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 
 class SharedPreferencesManager private constructor(context: Context) : UserSettings {
-    private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+    private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     companion object {
         private val LAST_IP = "last_ip"
