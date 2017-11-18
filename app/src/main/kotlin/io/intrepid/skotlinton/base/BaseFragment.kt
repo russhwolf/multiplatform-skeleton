@@ -20,7 +20,10 @@ abstract class BaseFragment<P : BaseContract.Presenter> : Fragment(), BaseContra
         get() = activity.application as SkotlintonApplication
     protected abstract val layoutResourceId: Int
 
-    protected lateinit var presenter: P
+    protected val presenter: P by lazy(LazyThreadSafetyMode.NONE) {
+        val configuration = skotlintonApplication.getPresenterConfiguration()
+        createPresenter(configuration)
+    }
     private var unbinder: Unbinder? = null
 
     @CallSuper
@@ -33,9 +36,7 @@ abstract class BaseFragment<P : BaseContract.Presenter> : Fragment(), BaseContra
     override fun onCreate(savedInstanceState: Bundle?) {
         Timber.v("Lifecycle onCreate: $this")
         super.onCreate(savedInstanceState)
-        val configuration = skotlintonApplication.getPresenterConfiguration()
         onViewCreated(savedInstanceState)
-        presenter = createPresenter(configuration)
     }
 
     /**
