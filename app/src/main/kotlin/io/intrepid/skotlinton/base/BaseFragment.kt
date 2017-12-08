@@ -36,7 +36,6 @@ abstract class BaseFragment<P : BaseContract.Presenter> : Fragment(), BaseContra
     override fun onCreate(savedInstanceState: Bundle?) {
         Timber.v("Lifecycle onCreate: $this")
         super.onCreate(savedInstanceState)
-        onViewCreated(savedInstanceState)
     }
 
     /**
