@@ -11,7 +11,10 @@ import android.support.annotation.CallSuper
  */
 abstract class BaseMvpActivity<P : BaseContract.Presenter> : BaseActivity(), BaseContract.View {
 
-    protected lateinit var presenter: P
+    protected val presenter: P by lazy(LazyThreadSafetyMode.NONE) {
+        val configuration = skotlintonApplication.getPresenterConfiguration()
+        createPresenter(configuration)
+    }
 
     /**
      * Override [.onViewCreated] to handle any logic that needs to occur right after inflating the view.
@@ -19,8 +22,6 @@ abstract class BaseMvpActivity<P : BaseContract.Presenter> : BaseActivity(), Bas
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val configuration = skotlintonApplication.getPresenterConfiguration()
-        presenter = createPresenter(configuration)
         onViewCreated(savedInstanceState)
         presenter.onViewCreated()
     }
