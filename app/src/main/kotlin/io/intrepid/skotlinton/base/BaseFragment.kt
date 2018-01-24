@@ -17,7 +17,7 @@ import timber.log.Timber
 abstract class BaseFragment<P : BaseContract.Presenter> : Fragment(), BaseContract.View {
 
     protected val skotlintonApplication: SkotlintonApplication
-        get() = activity.application as SkotlintonApplication
+        get() = activity?.application as SkotlintonApplication
     protected abstract val layoutResourceId: Int
 
     protected val presenter: P by lazy(LazyThreadSafetyMode.NONE) {
@@ -49,7 +49,7 @@ abstract class BaseFragment<P : BaseContract.Presenter> : Fragment(), BaseContra
         return view
     }
 
-    override final fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override final fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         onViewCreated(savedInstanceState)
         presenter.onViewCreated()
