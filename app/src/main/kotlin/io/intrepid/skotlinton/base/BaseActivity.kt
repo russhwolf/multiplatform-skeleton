@@ -1,6 +1,5 @@
 package io.intrepid.skotlinton.base
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.CallSuper
@@ -8,7 +7,6 @@ import android.support.v7.app.AppCompatActivity
 import butterknife.ButterKnife
 import io.intrepid.skotlinton.SkotlintonApplication
 import timber.log.Timber
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 abstract class BaseActivity : AppCompatActivity() {
 
@@ -64,10 +62,5 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onDestroy() {
         Timber.v("Lifecycle onDestroy: $this")
         super.onDestroy()
-    }
-
-    @CallSuper
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
     }
 }
