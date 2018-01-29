@@ -7,6 +7,7 @@ import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.filters.SmallTest
 import android.support.test.rule.ActivityTestRule
+import com.nhaarman.mockito_kotlin.whenever
 import io.intrepid.skotlinton.InstrumentationTestApplication
 import io.intrepid.skotlinton.R
 import io.intrepid.skotlinton.rest.TestRestClient
@@ -18,7 +19,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
 
 @SmallTest
 class ExampleSmokeTest : BaseUiTest() {
@@ -43,7 +43,7 @@ class ExampleSmokeTest : BaseUiTest() {
         activityTestRule.launchActivity(null)
         mockServerRule.enqueueResponse(io.intrepid.skotlinton.debug.test.R.raw.mock_ip)
 
-        `when`(mockUserSettings.lastIp).thenReturn("127.0.0.2")
+        whenever(mockUserSettings.lastIp).thenReturn("127.0.0.2")
 
         onView(withId(R.id.example1_button)).perform(click())
         onView(withId(R.id.example2_current_ip)).check(matches(withText("Your current Ip address is 127.0.0.1")))

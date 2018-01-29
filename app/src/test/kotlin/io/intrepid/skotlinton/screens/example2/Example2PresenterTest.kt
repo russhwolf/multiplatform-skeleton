@@ -1,13 +1,13 @@
 package io.intrepid.skotlinton.screens.example2
 
+import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.whenever
 import io.intrepid.skotlinton.models.IpModel
 import io.intrepid.skotlinton.testutils.BasePresenterTest
 import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.verify
 
 internal class Example2PresenterTest : BasePresenterTest<Example2Presenter>() {
     @Mock
@@ -25,8 +25,8 @@ internal class Example2PresenterTest : BasePresenterTest<Example2Presenter>() {
 
         val mockIpModel = IpModel()
         mockIpModel.ip = mockIp
-        `when`(mockRestApi.getMyIp()).thenReturn(Single.just(mockIpModel))
-        `when`(mockUserSettings.lastIp).thenReturn(mockPreviousIp)
+        whenever(mockRestApi.getMyIp()).thenReturn(Single.just(mockIpModel))
+        whenever(mockUserSettings.lastIp).thenReturn(mockPreviousIp)
 
         presenter.onViewCreated()
         verify(mockView).showPreviousIpAddress(mockPreviousIp)
@@ -38,8 +38,8 @@ internal class Example2PresenterTest : BasePresenterTest<Example2Presenter>() {
     @Test
     @Throws(Exception::class)
     fun onViewCreated_NoPreviousIp() {
-        `when`(mockRestApi.getMyIp()).thenReturn(Single.error(Throwable()))
-        `when`(mockUserSettings.lastIp).thenReturn("")
+        whenever(mockRestApi.getMyIp()).thenReturn(Single.error(Throwable()))
+        whenever(mockUserSettings.lastIp).thenReturn("")
 
         presenter.onViewCreated()
         verify(mockView).hidePreviousIpAddress()
