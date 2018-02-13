@@ -56,9 +56,13 @@ task unitTestCoverage(type: JacocoReport, dependsOn: "test${buildVariant}UnitTes
             dir: "${buildDir}/tmp/kotlin-classes/${buildVariantDirectory}",
             excludes: [*coverageClassDirs.excludes.asList(),
                        '**/*Activity.class',
+                       '**/*Activity$*.class',
                        '**/*Fragment.class',
+                       '**/*Fragment$*.class',
                        '**/*Service.class',
-                       '**/*Application.class'
+                       '**/*Service$*.class',
+                       '**/*Application.class',
+                       '**/*Application$*.class'
             ]
     )
     executionData = files("${buildDir}/jacoco/test${buildVariant}UnitTest.exec")
