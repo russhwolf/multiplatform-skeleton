@@ -4,10 +4,11 @@ import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import io.intrepid.multiskeleton.models.IpModel
 import io.intrepid.multiskeleton.testutils.BasePresenterTest
-import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
+import retrofit2.mock.Calls
+import java.io.IOException
 
 internal class Example2PresenterTest : BasePresenterTest<Example2Presenter>() {
     @Mock
@@ -25,12 +26,11 @@ internal class Example2PresenterTest : BasePresenterTest<Example2Presenter>() {
 
         val mockIpModel = IpModel()
         mockIpModel.ip = mockIp
-        whenever(mockRestApi.getMyIp()).thenReturn(Single.just(mockIpModel))
+        whenever(mockRestApi.getMyIp()).thenReturn(Calls.response(mockIpModel))
         whenever(mockUserSettings.lastIp).thenReturn(mockPreviousIp)
 
         presenter.onViewCreated()
         verify(mockView).showPreviousIpAddress(mockPreviousIp)
-        testConfiguration.triggerRxSchedulers()
         verify(mockView).showCurrentIpAddress(mockIp)
         verify(mockUserSettings).lastIp = mockIp
     }
@@ -38,7 +38,7 @@ internal class Example2PresenterTest : BasePresenterTest<Example2Presenter>() {
     @Test
     @Throws(Exception::class)
     fun onViewCreated_NoPreviousIp() {
-        whenever(mockRestApi.getMyIp()).thenReturn(Single.error(Throwable()))
+        whenever(mockRestApi.getMyIp()).thenReturn(Calls.failure(IOException()))
         whenever(mockUserSettings.lastIp).thenReturn("")
 
         presenter.onViewCreated()

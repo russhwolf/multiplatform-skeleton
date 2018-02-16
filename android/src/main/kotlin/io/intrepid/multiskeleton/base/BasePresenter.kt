@@ -3,21 +3,12 @@ package io.intrepid.multiskeleton.base
 import io.intrepid.multiskeleton.logging.CrashReporter
 import io.intrepid.multiskeleton.rest.RestApi
 import io.intrepid.multiskeleton.settings.UserSettings
-import io.intrepid.multiskeleton.utils.applySchedulers
-import io.reactivex.Observable
-import io.reactivex.Scheduler
-import io.reactivex.Single
-import io.reactivex.disposables.CompositeDisposable
 
 abstract class BasePresenter<V : BaseContract.View>(protected var view: V?, configuration: PresenterConfiguration) : BaseContract.Presenter {
 
-    protected val ioScheduler: Scheduler = configuration.ioScheduler
-    protected val uiScheduler: Scheduler = configuration.uiScheduler
     protected val userSettings: UserSettings = configuration.userSettings
     protected val restApi: RestApi = configuration.restApi
     protected val crashReporter: CrashReporter = configuration.crashReporter
-
-    protected val disposables: CompositeDisposable = CompositeDisposable()
 
     private var isViewBound = false
 
@@ -39,7 +30,6 @@ abstract class BasePresenter<V : BaseContract.View>(protected var view: V?, conf
     }
 
     override fun unbindView() {
-        disposables.clear()
         this.view = null
 
         if (isViewBound) {
@@ -58,13 +48,5 @@ abstract class BasePresenter<V : BaseContract.View>(protected var view: V?, conf
      */
     override fun onViewDestroyed() {
 
-    }
-
-    fun <T> Observable<T>.subscribeOnIoObserveOnUi(): Observable<T> {
-        return applySchedulers(ioScheduler, uiScheduler)
-    }
-
-    fun <T> Single<T>.subscribeOnIoObserveOnUi(): Single<T> {
-        return applySchedulers(ioScheduler, uiScheduler)
     }
 }
