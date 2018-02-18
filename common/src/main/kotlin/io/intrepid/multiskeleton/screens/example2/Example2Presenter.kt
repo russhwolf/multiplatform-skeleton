@@ -7,7 +7,7 @@ import io.intrepid.multiskeleton.rest.Call
 import io.intrepid.multiskeleton.rest.Callback
 import io.intrepid.multiskeleton.rest.Response
 
-internal class Example2Presenter(view: Example2Contract.View, configuration: PresenterConfiguration)
+class Example2Presenter(view: Example2Contract.View, configuration: PresenterConfiguration)
     : BasePresenter<Example2Contract.View>(view, configuration), Example2Contract.Presenter {
 
     override fun onViewCreated() {
@@ -19,7 +19,7 @@ internal class Example2Presenter(view: Example2Contract.View, configuration: Pre
             }
 
             override fun onResponse(call: Call<IpModel>, response: Response<IpModel>) {
-                if (response.isSuccessful) {
+                if (response.isSuccessful()) {
                     response.body()?.let {
                         val ip = it.ip
                         view?.showCurrentIpAddress(ip)
