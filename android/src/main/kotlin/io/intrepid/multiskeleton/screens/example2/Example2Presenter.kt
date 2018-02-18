@@ -5,7 +5,7 @@ import io.intrepid.multiskeleton.base.PresenterConfiguration
 import io.intrepid.multiskeleton.models.IpModel
 import io.intrepid.multiskeleton.rest.Call
 import io.intrepid.multiskeleton.rest.Callback
-import retrofit2.Response
+import io.intrepid.multiskeleton.rest.Response
 
 internal class Example2Presenter(view: Example2Contract.View, configuration: PresenterConfiguration)
     : BasePresenter<Example2Contract.View>(view, configuration), Example2Contract.Presenter {
