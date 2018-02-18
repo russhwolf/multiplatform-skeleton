@@ -2,6 +2,7 @@ package io.intrepid.multiskeleton
 
 import io.intrepid.multiskeleton.base.PresenterConfiguration
 import io.intrepid.multiskeleton.logging.CrashReporter
+import io.intrepid.multiskeleton.logging.TimberLogger
 import io.intrepid.multiskeleton.rest.RestApi
 import io.intrepid.multiskeleton.rest.RetrofitClient
 import io.intrepid.multiskeleton.settings.SharedPreferencesManager
@@ -14,6 +15,7 @@ class InstrumentationTestApplication : MultiskeletonApplication() {
                 // using AsyncTask executor since Espresso automatically waits for it to clear before proceeding
                 userSettingsOverride ?: SharedPreferencesManager.getInstance(this),
                 restApiOverride ?: RetrofitClient.restApi,
+                TimberLogger,
                 Mockito.mock(CrashReporter::class.java)
         )
     }

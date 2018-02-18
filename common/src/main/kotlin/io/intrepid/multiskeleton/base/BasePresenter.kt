@@ -1,6 +1,7 @@
 package io.intrepid.multiskeleton.base
 
 import io.intrepid.multiskeleton.logging.CrashReporter
+import io.intrepid.multiskeleton.logging.Logger
 import io.intrepid.multiskeleton.rest.RestApi
 import io.intrepid.multiskeleton.settings.UserSettings
 
@@ -8,6 +9,7 @@ abstract class BasePresenter<V : BaseContract.View>(protected var view: V?, conf
 
     protected val userSettings: UserSettings = configuration.userSettings
     protected val restApi: RestApi = configuration.restApi
+    protected val logger: Logger = configuration.logger
     protected val crashReporter: CrashReporter = configuration.crashReporter
 
     private var isViewBound = false

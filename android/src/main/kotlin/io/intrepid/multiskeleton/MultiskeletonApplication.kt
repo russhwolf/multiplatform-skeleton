@@ -5,6 +5,7 @@ import com.squareup.leakcanary.LeakCanary
 import io.intrepid.multiskeleton.base.PresenterConfiguration
 import io.intrepid.multiskeleton.logging.CrashlyticsReporter
 import io.intrepid.multiskeleton.logging.TimberConfig
+import io.intrepid.multiskeleton.logging.TimberLogger
 import io.intrepid.multiskeleton.rest.RetrofitClient
 import io.intrepid.multiskeleton.settings.SharedPreferencesManager
 
@@ -28,6 +29,7 @@ open class MultiskeletonApplication : Application() {
         return PresenterConfiguration(
                 SharedPreferencesManager.getInstance(this),
                 RetrofitClient.restApi,
+                TimberLogger,
                 CrashlyticsReporter
         )
     }
