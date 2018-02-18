@@ -1,1 +1,1 @@
-include ':android', ':jvm', ':common'
+include ':android', ':jvm', ':native', ':common'

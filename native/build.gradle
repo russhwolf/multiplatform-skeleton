@@ -1,0 +1,26 @@
+apply plugin: 'konan'
+
+konan.targets = ['iphone']
+
+konanArtifacts {
+    framework('common') {
+        enableMultiplatform true
+    }
+}
+
+dependencies {
+    expectedBy project(':common')
+}
+
+task test(dependsOn: run)
+
+task exportFramework(type: Copy, dependsOn: ['build', 'removeOldFramework']) {
+    from('build/konan/bin/iphone/') {
+        exclude '*.bc'
+    }
+    into '../xcode/Multiskeleton/'
+}
+
+task removeOldFramework(type: Delete) {
+    delete '../xcode/Multiskeleton/common.framework'
+}
