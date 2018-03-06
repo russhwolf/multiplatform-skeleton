@@ -27,19 +27,19 @@ internal class Example2PresenterTest : BasePresenterTest<Example2Presenter>() {
         val mockIpModel = IpModel()
         mockIpModel.ip = mockIp
         whenever(mockRestApi.getMyIp()).thenReturn(Calls.response(mockIpModel))
-        whenever(mockUserSettings.lastIp).thenReturn(mockPreviousIp)
+        whenever(mockUserSettings.getLastIp()).thenReturn(mockPreviousIp)
 
         presenter.onViewCreated()
         verify(mockView).showPreviousIpAddress(mockPreviousIp)
         verify(mockView).showCurrentIpAddress(mockIp)
-        verify(mockUserSettings).lastIp = mockIp
+        verify(mockUserSettings).setLastIp(mockIp)
     }
 
     @Test
     @Throws(Exception::class)
     fun onViewCreated_NoPreviousIp() {
         whenever(mockRestApi.getMyIp()).thenReturn(Calls.failure(IOException()))
-        whenever(mockUserSettings.lastIp).thenReturn("")
+        whenever(mockUserSettings.getLastIp()).thenReturn("")
 
         presenter.onViewCreated()
         verify(mockView).hidePreviousIpAddress()

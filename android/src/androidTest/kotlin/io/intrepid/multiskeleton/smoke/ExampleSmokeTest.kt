@@ -43,7 +43,7 @@ class ExampleSmokeTest : BaseUiTest() {
         activityTestRule.launchActivity(null)
         mockServerRule.enqueueResponse(io.intrepid.multiskeleton.debug.test.R.raw.mock_ip)
 
-        whenever(mockUserSettings.lastIp).thenReturn("127.0.0.2")
+        whenever(mockUserSettings.getLastIp()).thenReturn("127.0.0.2")
 
         onView(withId(R.id.example1_button)).perform(click())
         onView(withId(R.id.example2_current_ip)).check(matches(withText("Your current Ip address is 127.0.0.1")))

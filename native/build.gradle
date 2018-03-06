@@ -18,9 +18,9 @@ task exportFramework(type: Copy, dependsOn: ['build', 'removeOldFramework']) {
     from('build/konan/bin/iphone/') {
         exclude '*.bc'
     }
-    into '../xcode/Multiskeleton/'
+    into '../ios/Multiskeleton/'
 }
 
 task removeOldFramework(type: Delete) {
-    delete '../xcode/Multiskeleton/common.framework'
+    delete '../ios/Multiskeleton/common.framework'
 }

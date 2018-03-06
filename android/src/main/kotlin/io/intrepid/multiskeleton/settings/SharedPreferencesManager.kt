@@ -15,7 +15,11 @@ class SharedPreferencesManager private constructor(context: Context) : UserSetti
         }
     }
 
-    override var lastIp: String
-        get() = preferences.getString(LAST_IP, "")
-        set(value) = preferences.edit().putString(LAST_IP, value).apply()
+    override fun getLastIp(): String {
+        return preferences.getString(LAST_IP, "")
+    }
+
+    override fun setLastIp(ip: String) {
+        preferences.edit().putString(LAST_IP, ip).apply()
+    }
 }

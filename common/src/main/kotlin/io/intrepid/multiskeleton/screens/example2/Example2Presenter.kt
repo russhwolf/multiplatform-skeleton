@@ -23,7 +23,7 @@ class Example2Presenter(view: Example2Contract.View, configuration: PresenterCon
                     response.body()?.let {
                         val ip = it.ip
                         view?.showCurrentIpAddress(ip)
-                        userSettings.lastIp = ip
+                        userSettings.setLastIp(ip)
                     } ?: logger.w("Null response body!")
                 } else {
                     logger.w(response.errorBody().toString())
@@ -32,7 +32,7 @@ class Example2Presenter(view: Example2Contract.View, configuration: PresenterCon
 
         })
 
-        val lastIp = userSettings.lastIp
+        val lastIp = userSettings.getLastIp()
         if (lastIp.isEmpty()) {
             view?.hidePreviousIpAddress()
         } else {

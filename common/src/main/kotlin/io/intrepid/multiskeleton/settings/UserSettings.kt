@@ -1,6 +1,7 @@
 package io.intrepid.multiskeleton.settings
 
 interface UserSettings {
+    fun getLastIp(): String
 
-    var lastIp: String
+    fun setLastIp(ip: String)
 }
