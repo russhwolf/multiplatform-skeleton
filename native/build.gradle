@@ -1,6 +1,6 @@
 apply plugin: 'konan'
 
-konan.targets = ['iphone']
+konan.targets = ['iphone', 'iphone_sim']
 
 konanArtifacts {
     framework('common') {
@@ -14,13 +14,17 @@ dependencies {
 
 task test(dependsOn: run)
 
-task exportFramework(type: Copy, dependsOn: ['build', 'removeOldFramework']) {
-    from('build/konan/bin/iphone/') {
-        exclude '*.bc'
-    }
+task exportIphoneFramework(type: Copy, dependsOn: ['build', 'removeOldFramework']) {
+    from 'build/konan/bin/iphone/'
+    into '../ios/Multiskeleton/'
+}
+
+task exportIphoneSimFramework(type: Copy, dependsOn: ['build', 'removeOldFramework']) {
+    from 'build/konan/bin/iphone_sim/'
     into '../ios/Multiskeleton/'
 }
 
 task removeOldFramework(type: Delete) {
     delete '../ios/Multiskeleton/common.framework'
+    delete '../ios/Multiskeleton/common.framework.dSYM'
 }

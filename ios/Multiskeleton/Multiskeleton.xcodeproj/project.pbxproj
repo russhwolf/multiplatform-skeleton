@@ -210,6 +210,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 46F2C491203A1F77005EC189 /* Build configuration list for PBXNativeTarget "Multiskeleton" */;
 			buildPhases = (
+				466A0ECC2058BBE40010ADCD /* Copy Framework */,
 				46F2C465203A1F77005EC189 /* Sources */,
 				46F2C466203A1F77005EC189 /* Frameworks */,
 				46F2C467203A1F77005EC189 /* Resources */,
@@ -333,6 +334,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		466A0ECC2058BBE40010ADCD /* Copy Framework */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Framework";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "case \"$PLATFORM_NAME\" in\niphoneos)\nTASK=exportIphoneFramework\n;;\niphonesimulator)\nTASK=exportIphoneSimFramework\n;;\n*)\necho \"Unknown platform: $PLATFORM_NAME\"\nexit 1\n;;\nesac\n\nif [ \"$CONFIGURATION\" == \"Debug\" ]; then\nENABLE_DEBUG=true\nelse\nENABLE_DEBUG=false\nfi\n\ncd ../..\n\n./gradlew :native:\"$TASK\" -PenableDebug=$ENABLE_DEBUG";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		46F2C465203A1F77005EC189 /* Sources */ = {
