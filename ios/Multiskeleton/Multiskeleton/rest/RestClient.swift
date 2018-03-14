@@ -9,6 +9,8 @@ import Foundation
 import common
 
 class RestClient: NSObject, CommonRestApi {
+    let webClient = WebClient()
+    
     func getMyIp() -> CommonCall {
         let url = "https://api.ipify.org/?format=json"
         let modelCreator = { (data: Data?) -> CommonIpModel? in
@@ -29,7 +31,7 @@ class RestClient: NSObject, CommonRestApi {
                 return nil
             }
         }
-        return Call(_url: url, _modelCreator: modelCreator)
+        return Call(_webClient: webClient, _url: url, _modelCreator: modelCreator)
     }
 }
 
@@ -62,10 +64,12 @@ class WebClient {
 class Call<T>: NSObject, CommonCall {
     private var cancelled: Bool
     private var executed: Bool
+    private let webClient: WebClient
     private let url: String
     private let modelCreator: (Data?) -> T?
     
-    init(_url: String, _modelCreator: @escaping (Data?) -> T?) {
+    init(_webClient: WebClient, _url: String, _modelCreator: @escaping (Data?) -> T?) {
+        self.webClient = _webClient
         self.url = _url
         self.modelCreator = _modelCreator
         cancelled = false
@@ -77,7 +81,7 @@ class Call<T>: NSObject, CommonCall {
         if (executed || cancelled) {
             return
         }
-        WebClient().get(urlString: url, modelCreator: modelCreator) { (ipModel) in
+        webClient.get(urlString: url, modelCreator: modelCreator) { (ipModel) in
             guard let model = ipModel else {
                 // TODO create real error message
                 let throwable = CommonStdlibThrowable(message: "An unknown error occured")
