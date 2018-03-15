@@ -9,7 +9,8 @@ import Foundation
 import common
 
 class RestClient: NSObject, CommonRestApi {
-    let webClient = WebClient()
+    private let webClient = WebClient()
+    private let decoder = JSONDecoder()
     
     func getMyIp() -> CommonCall {
         let url = "https://api.ipify.org/?format=json"
@@ -18,14 +19,7 @@ class RestClient: NSObject, CommonRestApi {
                 return nil
             }
             do {
-                guard let jsonData = try JSONSerialization.jsonObject(with: responseData) as? [String: Any] else {
-                    return nil
-                }
-                guard let ip = jsonData["ip"] as? String else {
-                    return nil
-                }
-                let ipModel = CommonIpModel()
-                ipModel.ip = ip
+                let ipModel = try self.decoder.decode(IpModel.self, from: responseData).toCommonModel()
                 return ipModel
             } catch {
                 return nil
@@ -35,23 +29,41 @@ class RestClient: NSObject, CommonRestApi {
     }
 }
 
-class WebClient {
-    // TODO report errors
-    func get<T>(urlString: String, modelCreator: @escaping (Data?) -> T?, completionHandler: @escaping (T?) -> Void) {
+private class IpModel: Codable {
+    let ip: String
+    
+    init(_ip: String) {
+        self.ip = _ip
+    }
+    
+    func toCommonModel() -> CommonIpModel {
+        let commonModel = CommonIpModel()
+        commonModel.ip = self.ip
+        return commonModel
+    }
+}
+
+private let ERROR_DOMAIN = Bundle.main.bundleIdentifier!
+private let ERROR_URL = 1
+private let ERROR_SERIALIZATION = 2
+
+private class WebClient {
+    
+    func get<T>(urlString: String, modelCreator: @escaping (Data?) -> T?, completionHandler: @escaping (T) -> Void, errorHandler: @escaping (Error) -> Void) {
         guard let url: URL = URL(string: urlString) else {
+            errorHandler(NSError.init(domain: ERROR_DOMAIN, code: ERROR_URL, userInfo: ["url": urlString]))
             return
         }
         let request = URLRequest(url: url)
-        
         let session = URLSession.shared
         let task = session.dataTask(with: request) { (data, response, error) in
-            guard error == nil else {
-                completionHandler(nil)
+            if error != nil {
+                errorHandler(error!)
                 return
             }
             
             guard let model = modelCreator(data) else {
-                completionHandler(nil)
+                errorHandler(NSError.init(domain: ERROR_DOMAIN, code: ERROR_SERIALIZATION, userInfo: ["data": data ?? []]))
                 return
             }
             completionHandler(model)
@@ -68,7 +80,7 @@ class Call<T>: NSObject, CommonCall {
     private let url: String
     private let modelCreator: (Data?) -> T?
     
-    init(_webClient: WebClient, _url: String, _modelCreator: @escaping (Data?) -> T?) {
+    fileprivate init(_webClient: WebClient, _url: String, _modelCreator: @escaping (Data?) -> T?) {
         self.webClient = _webClient
         self.url = _url
         self.modelCreator = _modelCreator
@@ -81,21 +93,18 @@ class Call<T>: NSObject, CommonCall {
         if (executed || cancelled) {
             return
         }
-        webClient.get(urlString: url, modelCreator: modelCreator) { (ipModel) in
-            guard let model = ipModel else {
-                // TODO create real error message
-                let throwable = CommonStdlibThrowable(message: "An unknown error occured")
-                OperationQueue.main.addOperation {
-                    callback.onFailure(call: self, t: throwable)
-                }
-                return
-            }
+        webClient.get(urlString: url, modelCreator: modelCreator, completionHandler: { model in
             let response = CommonResponse(_body: model, _errorBody: nil, _isSuccessful: true)
             OperationQueue.main.addOperation {
                 callback.onResponse(call: self, response: response)
             }
             self.executed = true
-        }
+        }, errorHandler: { error in
+            let throwable = CommonStdlibThrowable(message: error.localizedDescription)
+            OperationQueue.main.addOperation {
+                callback.onFailure(call: self, t: throwable)
+            }
+        })
     }
     
     func isExecuted() -> Bool {
